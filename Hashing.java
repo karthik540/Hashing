@@ -16,10 +16,15 @@ class DataBlock{
 
 class HashBlock{
     final private int DataBlockLength = 10;
-    private DataBlock[] arr = new DataBlock[DataBlockLength];
+    private DataBlock[] arr;
 
     public HashBlock(){
-        System.out.println("called!");
+        arr = new DataBlock[DataBlockLength];
+        //Creating instance for the datablock array...
+        for(int i = 0;i < DataBlockLength; i++){
+            arr[i] = new DataBlock();
+        }
+        System.out.println("called 2");        
     }
 
     public void pushblock(int data , int value , int hash){
@@ -36,9 +41,18 @@ class HashBlock{
 };
 
 class Hashing{
-    final int hashTableLength = 10;
-    HashBlock[] hashTable = new HashBlock[hashTableLength];    
-    final int randomNoLimit = 100;
+    final private int hashTableLength = 10;
+    private HashBlock[] hashTable;   
+    final private int randomNoLimit = 1000;
+
+    //Constructor..
+    public Hashing(){
+        hashTable = new HashBlock[hashTableLength];
+        //Creating Instance for the hashblock array...
+        for(int i = 0 ;i < hashTableLength; i++){
+            hashTable[i] = new HashBlock();
+        }
+    }
 
     //Hash Function i.e, hash = number % 10
     private int hashFunction(int number){
@@ -59,7 +73,7 @@ class Hashing{
             int value = randObj.nextInt(randomNoLimit) + 1;
             System.out.println(data);
             //hash1 = hashfunction(data) , hash2 = hashfunction(data/10)
-            hashTable[hashFunction(data)].pushblock(data , value , hashFunction(data/10));
+            hashTable[hashFunction(data/10)].pushblock(data , value , hashFunction(data));
         }
         scanObj.close();
     }
